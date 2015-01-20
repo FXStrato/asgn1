@@ -22,6 +22,6 @@ viewer know exactly what is available to search for.
 	<button type="submit" alt="Run Search" />Search</button> </br>
 </form>
 <div id="search_suggest" class="form-wrapper">
-	</div>
+</div>
 </body>
 </html>

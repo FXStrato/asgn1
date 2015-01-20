@@ -1,0 +1,5 @@
+Extra Credit:
+
+- Implemented the use of AJAX. Though it does jump to a different page, I used it to create a dynamic search bar. Hopefully, credit can be obtained there. To see it in action, being typing in the name of a player. It will show a list of players that match what is in the search bar.
+- Results page looks good: See for yourself. :3
+- Photos are embedded on the results page. Also, if multiple people are found, each person has its image to better differentiate the correct person you were searching for (ex if you searched for James, it comes back with multiple results). Also, if a picture is not found from the NBA site, it will instead display a default image instead of breaking. 

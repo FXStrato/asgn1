@@ -1,8 +1,9 @@
 <!-- 
     This php file displays the data for the player. It comes as a GET from 
-    index, and calls on the database, returning data. 
+    index, and calls on the database through pyr.php, returning data. 
     -->
 <?php
+require('pyr.php');
 function button(){
 ?>
 <form action="index.php">
@@ -11,16 +12,13 @@ function button(){
 <?php
 }
 
-function getPlayer()
+function displayPlayer()
 {
     if (isset($_GET['txtSearch']) && $_GET['txtSearch'] != '') {
         try {
-            $search = $_GET['txtSearch'];
-            $conn   = new PDO('mysql:host=jeffrz.cvpvls47nbkz.us-west-2.rds.amazonaws.com;dbname=assignment1', 'root', 'mypassword');
-            $stmt   = $conn->prepare('SELECT * FROM nba WHERE name LIKE "%' . $search . '%" ORDER BY name asc');
-            $stmt->execute(array());
-            $result = $stmt->fetchAll();
-            if (count($result) === 1) {
+        	$class = new Player($_GET['txtSearch']);
+            if (count($class->getPlayer()) === 1) {
+                $result = $class->getPlayer();
                 $row = $result[0];
                 $image = str_replace(" ", "_", $row['name']);
                 $image = str_replace(".", "", $image);
@@ -63,12 +61,13 @@ function getPlayer()
 </div>
 <?php
 button();
-            } else if (count($result) > 1) {
+            } else if (count($class->getPlayer()) > 1) {
 ?>
  	<h1> Did you mean to find: </h1>
  	<div id="search-suggest" class="clone">
 <?php
-                for ($i = 0; $i < count($result); $i++) {
+                for ($i = 0; $i < count($class->getPlayer()); $i++) {
+                	$result = $class->getPlayer();
                     $row  = $result[$i];
                     $link = "player.php?txtSearch=" . $row['name'];
                     $link = str_replace(" ", "+", $link);
@@ -86,9 +85,7 @@ button();
 ?></a></div>
  <?php
                 }
-?>
-		</div>
-<?php
+        echo "</div>";
         button();
             } else {
 ?>
@@ -103,7 +100,8 @@ button();
             echo 'ERROR: ' . $e->getMessage();
         }
     } else {
-        die("Error. Please try again.");
+        print "Please Try Again.";
+        button();
     }
 }
 ?>
@@ -117,7 +115,7 @@ button();
     </head>
     <body>
         <?php
-getPlayer();
+displayPlayer();
 ?>
     </body>
 </html>
